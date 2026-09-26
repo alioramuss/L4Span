@@ -1,0 +1,6 @@
+set_directory_properties(PROPERTIES LABELS "mark")
+
+add_executable(mark_ring_buffer_test mark_ring_buffer_test.cpp)
+target_link_libraries(mark_ring_buffer_test ring_buffer gtest gtest_main)
+target_include_directories(mark_ring_buffer_test PRIVATE ${CMAKE_SOURCE_DIR})
+gtest_discover_tests(mark_ring_buffer_test)
