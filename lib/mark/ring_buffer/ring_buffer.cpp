@@ -4,18 +4,18 @@
 
 
 RingBuffer::RingBuffer(int nb){
-    int val = nb; 
-    if (nb == 0 || (nb & (nb - 1)) != 0){ 
+    uint32_t val = nb;
+    if (nb <= 0 || (nb & (nb - 1)) != 0){
         // If not a power of 2  => default value
         val = DEFAULT_MAX;
     }
-    storage_.resize(val);       // nb must be a power of 2
-    MASK = nb - 1;             // Mask
+    storage_.resize(val);       // val is a power of 2
+    MASK = val - 1;             // Mask must match the allocated size
 }
 
-RingBuffer::RingBuffer(){
-    RingBuffer(DEFAULT_MAX);
-}
+// Delegate so a default constructed buffer (e.g. created by
+// std::unordered_map::operator[]) is allocated and has a valid MASK.
+RingBuffer::RingBuffer() : RingBuffer(DEFAULT_MAX) {}
 
 
 RingBuffer::~RingBuffer()=default;
